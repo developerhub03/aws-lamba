@@ -30,7 +30,10 @@ import com.google.gson.Gson;
 public class SQSDynamoLambda implements RequestHandler<CloudWatchEvent, CloudWatchResponse> {
 
 	private String DYNAMODB_TABLE_NAME = "PersonDetails";
-
+	private String awsAccessKey = "";
+	private String awsSecretKey = "";
+	private String awsToken = "";
+	
 	@Override
 	public CloudWatchResponse handleRequest(CloudWatchEvent input, Context arg1) {
 		Date today = Calendar.getInstance().getTime();
@@ -68,9 +71,7 @@ public class SQSDynamoLambda implements RequestHandler<CloudWatchEvent, CloudWat
 	@SuppressWarnings("deprecation")
 	public AmazonSQS awsSQSClient() {
 		Region useast2 = Region.getRegion(Regions.US_EAST_2);
-		AWSCredentials sessionCredentials = new BasicSessionCredentials("ASIAIHCADD5PJY3YOLEA",
-				"t7UVxSkiXN4uiaM7dg/BGs1Hni2kjgChfOyD53uA",
-				"FQoDYXdzEPP//////////wEaDCEaj7KsuoaIoaRfwCK3Ap6gZjE1aG6UZD84EtEXZ3J2o1qzIh+S0L2281NeoH8ew7k8xIYRaCslhhN1uX2wI1x+G4/Atnb4t8sxNEZsKI9QnOzCzD/Yo2rEW76Jk7rMIF0Jc7Ilvqb8HTTtnLYRdUhNTbH9+k6bi9EyD2EvAy4RB1DUA3mYYV0RWuX8hxPskysyMZ7AzmRHXXMI5JCjU3YzzlgNGwrlmBOLQe3Tk//IXFQGlXBIMHr1Rev8BKSZwiZOvs3Aj27hv/Qyx9crI3r7NEYg3k46euHPni/UAAOmMZ4du9Zx8ssXl/SBzYnVYwPtaQG2PK3cK8tBTmd5Sfavhzql70QezDqQ4RaXphnl8dc1pUasNWEgp/wfflDaa+HNndYhCbVBJLPkq6fjMUmqXa4Gy9N3TIKus1cxj8kzp0qE2BRUKMWJpdkF");
+		AWSCredentials sessionCredentials = new BasicSessionCredentials(awsAccessKey, awsSecretKey, awsToken);
 		AmazonSQS sqs = new AmazonSQSClient(sessionCredentials);
 		sqs.setRegion(useast2);
 
